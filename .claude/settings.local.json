@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(chmod:*)",
+      "Bash(apachectl configtest:*)",
+      "Bash(sudo systemctl reload:*)",
+      "Bash(systemctl status:*)",
+      "Bash(curl:*)"
+    ]
+  }
+}
