@@ -5,7 +5,11 @@
       "Bash(apachectl configtest:*)",
       "Bash(sudo systemctl reload:*)",
       "Bash(systemctl status:*)",
-      "Bash(curl:*)"
+      "Bash(curl:*)",
+      "Bash(for v in 9.0.2 9.0.1 9.0.0)",
+      "Bash(do echo \"=== $v ===\")",
+      "Bash(python3:*)",
+      "Bash(done)"
     ]
   }
 }
