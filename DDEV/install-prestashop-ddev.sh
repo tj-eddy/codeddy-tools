@@ -18,16 +18,31 @@ PROJECT_NAME=${PROJECT_NAME:-prestashop}
 # Demander la version de PrestaShop
 echo ""
 echo "Versions disponibles:"
-echo "  1) PrestaShop 8.x (latest)"
-echo "  2) PrestaShop 1.7.x"
-read -p "Choisir la version (1 ou 2, défaut: 1): " VERSION_CHOICE
+echo "  1) PrestaShop 9.0.3  (derniere stable 9.x - PHP 8.1+)"
+echo "  2) PrestaShop 8.2.4  (derniere stable 8.2 - PHP 8.1+)"
+echo "  3) PrestaShop 8.1.7  (derniere stable 8.1 - PHP 8.1+)"
+echo "  4) PrestaShop 1.7.8.11 (derniere stable 1.7 - PHP 7.1 a 7.4)"
+read -p "Choisir la version (1-4, defaut: 1): " VERSION_CHOICE
 VERSION_CHOICE=${VERSION_CHOICE:-1}
 
-if [ "$VERSION_CHOICE" = "2" ]; then
-    PRESTASHOP_VERSION="1.7.8.11"
-else
-    PRESTASHOP_VERSION="8.1.7"
-fi
+case "$VERSION_CHOICE" in
+    2)
+        PRESTASHOP_VERSION="8.2.4"
+        PHP_VERSION="8.1"
+        ;;
+    3)
+        PRESTASHOP_VERSION="8.1.7"
+        PHP_VERSION="8.1"
+        ;;
+    4)
+        PRESTASHOP_VERSION="1.7.8.11"
+        PHP_VERSION="7.4"
+        ;;
+    *)
+        PRESTASHOP_VERSION="9.0.3"
+        PHP_VERSION="8.1"
+        ;;
+esac
 
 # Créer le dossier du projet
 echo ""
@@ -38,7 +53,7 @@ cd $PROJECT_NAME
 # Configurer DDEV
 echo ""
 echo "⚙️  Configuration de DDEV..."
-ddev config --project-type=php --php-version=8.1 --docroot=public --project-name=$PROJECT_NAME
+ddev config --project-type=php --php-version=$PHP_VERSION --docroot=public --project-name=$PROJECT_NAME
 
 # Démarrer DDEV
 echo ""
