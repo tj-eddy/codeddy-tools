@@ -71,14 +71,15 @@ ddev exec "mkdir -p public"
 # Extraire PrestaShop
 echo ""
 echo "📦 Extraction de PrestaShop..."
-ddev exec "unzip -q prestashop.zip -d public/"
-ddev exec "cd public && unzip -q prestashop.zip"
-ddev exec "rm prestashop.zip"
-ddev exec "rm public/prestashop.zip"
+ddev exec "unzip -o -q prestashop.zip -d public/"
+ddev exec "cd public && unzip -o -q prestashop.zip"
+ddev exec "rm -f prestashop.zip"
+ddev exec "rm -f public/prestashop.zip"
 
 # Définir les permissions
 echo ""
 echo "🔐 Configuration des permissions..."
+ddev exec "cd public && mkdir -p var config download img log mails modules themes translations upload"
 ddev exec "chmod -R 777 public/var public/config public/download public/img public/log public/mails public/modules public/themes public/translations public/upload"
 
 # Créer la base de données
