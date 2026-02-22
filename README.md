@@ -1,62 +1,60 @@
-# Tools
+# CODEDDY - Tools 🛠️
 
-Collection de scripts d'automatisation pour le developpement web sur Linux.
+Collection de scripts d'automatisation pour le développement web sous Linux (Debian, Ubuntu, Mint).
 
----
-
-## Structure du projet
-
-```
-Tools/
-├── make-vhost.sh                       # Creation de Virtual Hosts Apache/Nginx
-├── lm-clean.sh                         # Nettoyage systeme Linux Mint
-└── DDEV/
-    ├── install-ddev-docker.sh          # Installation Docker + DDEV
-    ├── install-wordpress-ddev.sh       # Projet WordPress avec DDEV
-    ├── install-prestashop-ddev.sh      # Projet PrestaShop avec DDEV
-    ├── install-symfony-ddev.sh         # Projet Symfony avec DDEV
-    ├── transform-lamp-to-ddev.sh       # Migration LAMP vers DDEV
-    ├── README.md                       # Documentation detaillee DDEV
-    └── EXEMPLES-CONCRETS.md            # Scenarios d'utilisation pas a pas
-```
+[![Version](https://img.shields.io/badge/version-1.1.0-blue.svg)](https://github.com/tj-eddy/codeddy-tools)
+[![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 
 ---
 
-## Scripts principaux
+## 📋 Présentation
 
-### `make-vhost.sh`
+Ce dépôt regroupe des outils essentiels pour optimiser votre flux de travail de développeur web sur Linux. Ils permettent d'automatiser des tâches répétitives comme la configuration de serveurs locaux ou le nettoyage du système.
 
-Automatise la creation de Virtual Hosts pour **Apache** et **Nginx** sur Linux.
+## 📁 Structure du projet
 
-- Detection automatique du type de projet (Symfony, PrestaShop, WordPress, generique)
-- Configuration PHP-FPM automatique
-- Gestion des permissions adaptee au framework
-- Ajout automatique dans `/etc/hosts`
-- Test de configuration et redemarrage du serveur
+```text
+codeddy-tools/
+├── make-vhost.sh       # Script de création de Virtual Hosts (Apache/Nginx)
+├── lm-clean.sh         # Script de maintenance et nettoyage système
+└── README.md           # Documentation principale
+```
 
+---
+
+## 🚀 Scripts disponibles
+
+### 1. `make-vhost.sh` - Configuration de serveurs
+
+Automatise la création de Virtual Hosts pour **Apache** et **Nginx**. Idéal pour configurer rapidement vos projets locaux.
+
+**Fonctionnalités :**
+- 🔍 **Détection auto** : Identifie les projets Symfony, PrestaShop, WordPress ou génériques.
+- ⚙️ **PHP-FPM** : Configuration automatique du socket PHP.
+- 🔐 **Permissions** : Gestion intelligente des droits (www-data) selon le framework.
+- 🌐 **Hosts** : Ajout automatique du nom de domaine dans `/etc/hosts`.
+- ✅ **Validation** : Test de configuration avant le redémarrage du service.
+
+**Utilisation :**
 ```bash
-sudo ./make-vhost.sh /var/www/mon-projet
-sudo ./make-vhost.sh /var/www/mon-projet mon-site.dev
+# Syntaxe : sudo ./make-vhost.sh [CHEMIN_PROJET] [NOM_DOMAINE]
+sudo ./make-vhost.sh /var/www/mon-projet mon-site.local
 ```
-
-**Prerequis :** Linux (Debian/Ubuntu ou RHEL), Apache ou Nginx installe, PHP, droits sudo.
 
 ---
 
-### `lm-clean.sh`
+### 2. `lm-clean.sh` - Maintenance Système
 
-Script de nettoyage systeme pour **Linux Mint**. Libere de l'espace disque en nettoyant :
+Un script de nettoyage conçu spécifiquement pour **Linux Mint** (et compatible Debian/Ubuntu). Il permet de libérer de l'espace disque en toute sécurité.
 
-1. Cache APT
-2. Paquets orphelins
-3. Cache des miniatures
-4. Cache utilisateur (fichiers > 30 jours)
-5. Journaux systeme (> 7 jours)
-6. Corbeille
-7. Fichiers temporaires (> 7 jours)
+**Tâches effectuées :**
+- 🧹 Vidage du cache APT et suppression des paquets orphelins.
+- 🖼️ Nettoyage du cache des miniatures (thumbnails).
+- 📂 Suppression des fichiers temporaires et vieux journaux (> 7 jours).
+- 🗑️ Vidage de la corbeille utilisateur.
+- 📊 Rapport d'espace disque avant et après.
 
-Affiche l'espace disque avant/apres le nettoyage.
-
+**Utilisation :**
 ```bash
 chmod +x lm-clean.sh
 ./lm-clean.sh
@@ -64,82 +62,27 @@ chmod +x lm-clean.sh
 
 ---
 
-## Dossier DDEV
+## 🛠️ Installation
 
-Scripts d'installation et de configuration de projets web avec [DDEV](https://ddev.readthedocs.io/) et Docker.
-
-### `DDEV/install-ddev-docker.sh`
-
-Installation complete de **Docker Engine** et **DDEV** sur Linux Mint :
-- Docker Engine + Docker Compose
-- DDEV
-- mkcert (HTTPS local)
-- Configuration des permissions utilisateur
+Clonez simplement le dépôt et donnez les droits d'exécution aux scripts :
 
 ```bash
-bash DDEV/install-ddev-docker.sh
-# Deconnexion/reconnexion requise apres execution
+git clone https://github.com/tj-eddy/codeddy-tools.git
+cd codeddy-tools
+chmod +x *.sh
 ```
-
-### `DDEV/install-wordpress-ddev.sh`
-
-Cree un projet **WordPress** DDEV avec installation automatique :
-- Telechargement WordPress (FR)
-- Configuration base de donnees
-- Installation WP-CLI
-- Theme, permaliens et permissions configures
-
-```bash
-bash DDEV/install-wordpress-ddev.sh
-```
-
-### `DDEV/install-prestashop-ddev.sh`
-
-Cree un projet **PrestaShop** DDEV :
-- Versions supportees : 9.0.3 (Composer), 8.2.4, 8.1.7, 1.7.8.11
-- Installation via Composer (9.x) ou ZIP (8.x, 1.7.x)
-- Configuration des permissions et de la base de donnees
-- Installation finale via l'interface web
-
-```bash
-bash DDEV/install-prestashop-ddev.sh
-```
-
-### `DDEV/install-symfony-ddev.sh`
-
-Cree un projet **Symfony** DDEV :
-- Types : webapp complete, API REST, skeleton minimal, website-skeleton
-- Version Symfony configurable
-- Outils dev inclus (MakerBundle, Profiler)
-- Hook post-start pour cache warmup
-
-```bash
-bash DDEV/install-symfony-ddev.sh
-```
-
-### `DDEV/transform-lamp-to-ddev.sh`
-
-Migre un projet **LAMP existant** vers DDEV :
-- Detection automatique : WordPress, PrestaShop, Symfony, Laravel, Drupal, PHP generique
-- Sauvegarde complete du projet
-- Export/import de la base de donnees MySQL
-- Mise a jour de la configuration (wp-config, .env, etc.)
-
-```bash
-cd /var/www/mon-projet-lamp
-bash /chemin/vers/DDEV/transform-lamp-to-ddev.sh
-```
-
-### Documentation DDEV
-
-- [DDEV/README.md](DDEV/README.md) : Documentation complete (commandes, configuration, depannage)
-- [DDEV/EXEMPLES-CONCRETS.md](DDEV/EXEMPLES-CONCRETS.md) : 7 scenarios d'utilisation detailles pas a pas
 
 ---
 
-## Contributeurs
+## 🤝 Contribution
 
-- **Eddy** (Developpeur Principal)
-- **Claude** (Assistant IA)
+Les suggestions et contributions sont les bienvenues ! N'hésitez pas à ouvrir une *Issue* ou à proposer une *Pull Request*.
 
-> Propose par [TJ Eddy](https://github.com/tj-eddy)
+## 🧔 Auteurs
+
+- **Eddy** ([@tj-eddy](https://github.com/tj-eddy)) - Développeur Principal
+- **Claude** - Assistant IA de conception
+
+---
+
+> Proposé par [TJ Eddy](https://github.com/tj-eddy)
